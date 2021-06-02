@@ -40,14 +40,8 @@
         position: relative;
         transition: .15s ease-out;
         font-weight: bold;
-
         &.active {
-          color: #409EFF;
-        }
-      }
-
-      .nav-item {
-        &.actived{
+          color: #1890ff;
           background-color: #e6f7ff;
           position: relative;
           &::after{
@@ -58,26 +52,10 @@
             position: absolute;
             right: 0;
             top: 0;
-          }
-        }
-        a {
-          display: block;
-          height: 40px;
-          color: #444;
-          line-height: 40px;
-          font-size: 14px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          font-weight: normal;
-
-          &:hover,
-          &.active {
-            color: #409EFF;
+            z-index: 222;
           }
         }
       }
-  
       &.sponsors {
         & > .sub-nav {
           margin-top: -10px;
@@ -132,9 +110,7 @@
 <template>
   <div
     class="side-nav"
-    @mouseenter="isFade = false"
-    :class="{ 'is-fade': isFade }"
-    :style="navStyle">
+  >
     <ul>
       <li
         class="nav-item"
@@ -189,7 +165,6 @@
         </template>
       </li>
     </ul>
-    <!--<div id="code-sponsor-widget"></div>-->
   </div>
 </template>
 <script>
@@ -206,16 +181,12 @@
       return {
         highlights: [],
         navState: [],
-        isSmallScreen: false,
-        isFade: false
+        isSmallScreen: false
       };
     },
     watch: {
       '$route.path'() {
         this.handlePathChange();
-      },
-      isFade(val) {
-        bus.$emit('navFade', val);
       }
     },
     computed: {
@@ -224,14 +195,6 @@
         const p = path.replace(`/${this.$route.meta.lang}/component`,'')
         console.log(p)
         return p
-      },
-      navStyle() {
-        const style = {};
-        if (this.isSmallScreen) {
-          style.paddingBottom = '60px';
-        }
-        style.opacity = this.isFade ? '0.5' : '1';
-        return style;
       },
       lang() {
         return this.$route.meta.lang;
@@ -252,12 +215,12 @@
         }
         this.$nextTick(() => {
           this.hideAllMenu();
-          let activeAnchor = this.$el.querySelector('a.active');
-          let ul = activeAnchor.parentNode;
-          while (ul.tagName !== 'UL') {
-            ul = ul.parentNode;
-          }
-          ul.style.height = 'auto';
+          // let activeAnchor = this.$el.querySelector('a.active');
+          // let ul = activeAnchor.parentNode;
+          // while (ul.tagName !== 'UL') {
+          //   ul = ul.parentNode;
+          // }
+          // ul.style.height = 'auto';
         });
       },
       hideAllMenu() {

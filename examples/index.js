@@ -2,6 +2,7 @@ import Vue from 'vue';
 import entry from './app';
 import VueRouter from 'vue-router';
 import Element from 'element-ui';
+import hljs from 'highlight.js';
 import routes from './route.config';
 import demoBlock from './components/demo-block';
 import MainFooter from './components/footer';
@@ -25,6 +26,15 @@ const router = new VueRouter({
   mode: 'hash',
   routes
 });
+
+router.afterEach(route => {
+  // https://github.com/highlightjs/highlight.js/issues/909#issuecomment-131686186
+  Vue.nextTick(() => {
+    const blocks = document.querySelectorAll('pre code:not(.hljs)');
+    Array.prototype.forEach.call(blocks, hljs.highlightBlock);
+  });
+});
+
 
 new Vue({
   ...entry,

@@ -1,13 +1,18 @@
-import Component from 'examples/pages/src/component'
+// import DialogDoc from './docs/dialog.md'
 let routers=[
   {
-    path: `/pages/compoent`,
-    // component: load('compoent'),
-    component: Component,
+    path: `/pages/component`,
+    component:load('component'),
     meta:{
       title: 'page',
       description: 'page',
     },
+    children:[
+      {
+        path: 'dialog',
+        component: loadDocs('dialog')
+      },
+    ]
   },
   // {
   //   path: `/demo/doc`,
@@ -20,7 +25,7 @@ let routers=[
   //   children: []
   // }
 ]
-const defaultPath = '/pages/compoent'
+const defaultPath = '/pages/component'
 routers = routers.concat([{
   path: '/',
   redirect: defaultPath
@@ -28,7 +33,7 @@ routers = routers.concat([{
   path: '*',
   redirect: defaultPath
 }]);
-export default routers
+
 
 function load(path) {
   return reqiureAsync(`./pages/src/${path}.vue`,'nav')
@@ -39,6 +44,11 @@ function loadDocs(path) {
 };
 
 function reqiureAsync(src,name){
-  return require(src)
-  return cb => require.ensure([], () =>cb(require(src),name))
+  // return () => Promise.resolve(require(src).default)
+  return cb => require.ensure([], () =>cb(require(`${src}`),name))
 }
+
+// loadView = (view) => { // 路由懒加载
+//   return () => Promise.resolve(require(src).default)
+// }
+export default routers

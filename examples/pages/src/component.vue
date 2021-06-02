@@ -19,6 +19,7 @@
     .page-component__nav {
       width: 240px;
       position: fixed;
+      border-right: 1px solid #eee;
       top: 0;
       bottom: 0;
       margin-top: 80px;
@@ -142,17 +143,11 @@
   <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
   <div class="page-container page-component">
     <el-scrollbar class="page-component__nav">
-      <side-nav :data="navsData" :base="`/component`"></side-nav>
+      <side-nav :data="navsData" :base="`/pages/component`"></side-nav>
     </el-scrollbar>
     <div class="page-component__content">
       <router-view class="content"></router-view>
     </div>
-    <el-backtop 
-      v-if="showBackToTop"
-      target=".page-component__scroll .el-scrollbar__wrap"
-      :right="100"
-      :bottom="150"
-    ></el-backtop>
   </div>
   </el-scrollbar>
 </template>

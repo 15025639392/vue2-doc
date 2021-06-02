@@ -7,16 +7,16 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
 const config = require('./config');
 const webpackConfig = {
-  mode: process.env.NODE_ENV,
+  mode: 'development',
+  target: 'web',
   entry: {
     docs: './examples/index.js'
   },
   output: {
-    path: path.resolve(process.cwd(), './examples'),
-    publicPath: process.env.CI_ENV || '',
+    path: '/dist',
+    publicPath:'/',
     filename: '[name].[hash:7].js',
     chunkFilename: '[name].js'
   },
@@ -30,9 +30,6 @@ const webpackConfig = {
     publicPath: '/',
     hot: true
   },
-  stats: {
-    children: false
-  },
   module: {
     rules: [
       // {
@@ -43,7 +40,6 @@ const webpackConfig = {
       // },
       {
         test: /\.(jsx?|babel|es6)$/,
-        include: process.cwd(),
         exclude: config.jsexclude,
         loader: 'babel-loader'
       },
@@ -83,7 +79,6 @@ const webpackConfig = {
       {
         test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
         loader: 'url-loader',
-        // todo: 这种写法有待调整
         query: {
           limit: 10000,
           name: path.posix.join('static', '[name].[hash:7].[ext]')
@@ -94,24 +89,15 @@ const webpackConfig = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './examples/index.tpl',
-      filename: './index.html',
-      favicon: './examples/favicon.ico'
+      template: './examples/index.html'
     }),
-    new ProgressBarPlugin(),
-    new VueLoaderPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      vue: {
-        compilerOptions: {
-          preserveWhitespace: false
-        }
-      }
-    })
+    // new ProgressBarPlugin(),
+    new VueLoaderPlugin()
   ],
   optimization: {
     minimizer: []
   },
-  devtool: '#eval-source-map'
+  devtool: 'source-map'
 };
 
 module.exports = webpackConfig;

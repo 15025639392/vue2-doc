@@ -1,7 +1,7 @@
 <template>
   <div
     class="demo-block"
-    :class="[blockClass, { 'hover': hovering }]"
+    :class="[{ 'hover': hovering }]"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false">
     <div class="source">
@@ -21,12 +21,12 @@
       :class="{ 'is-fixed': fixedControl }"
       @click="isExpanded = !isExpanded">
       <transition name="arrow-slide">
-        <i :class="[iconClass, { 'hovering': hovering }]"></i>
+        <i :class="[{ 'hovering': hovering }]"></i>
       </transition>
       <transition name="text-slide">
         <span v-show="hovering">{{ controlText }}</span>
       </transition>
-      <el-tooltip effect="dark" :content="langConfig['tooltip-text']" placement="right">
+      <el-tooltip effect="dark" placement="right">
         <transition name="text-slide">
           <el-button
             v-show="hovering || isExpanded"
@@ -34,7 +34,7 @@
             type="text"
             class="control-button"
             @click.stop="goCodepen">
-            {{ langConfig['button-text'] }}
+            在线运行
           </el-button>
         </transition>
       </el-tooltip>
@@ -135,7 +135,7 @@
       &.is-fixed {
         position: fixed;
         bottom: 0;
-        width: 868px;
+        width: calc(100vw - 312px);
       }
 
       i {
@@ -181,7 +181,7 @@
 </style>
 
 <script type="text/babel">
-  import Element from 'main/index.js';
+  import Element from 'element-ui';
   import { stripScript, stripStyle, stripTemplate } from '../util';
   const { version } = Element;
 
@@ -202,7 +202,6 @@
 
     methods: {
       goCodepen() {
-        // since 2.6.2 use code rather than jsfiddle https://blog.codepen.io/documentation/api/prefill/
         const { script, html, style } = this.codepen;
         const resourcesTpl = '<scr' + 'ipt src="//unpkg.com/vue/dist/vue.js"></scr' + 'ipt>' +
         '\n<scr' + `ipt src="//unpkg.com/element-ui@${ version }/lib/index.js"></scr` + 'ipt>';
@@ -250,26 +249,9 @@
     },
 
     computed: {
-      lang() {
-        return this.$route.path.split('/')[1];
-      },
-
-      langConfig() {
-        return compoLang.filter(config => config.lang === this.lang)[0]['demo-block'];
-      },
-
-      blockClass() {
-        return `demo-${ this.lang } demo-${ this.$router.currentRoute.path.split('/').pop() }`;
-      },
-
-      iconClass() {
-        return this.isExpanded ? 'el-icon-caret-top' : 'el-icon-caret-bottom';
-      },
-
       controlText() {
-        return this.isExpanded ? this.langConfig['hide-text'] : this.langConfig['show-text'];
+        return this.isExpanded ? '隐藏': '显示';
       },
-
       codeArea() {
         return this.$el.getElementsByClassName('meta')[0];
       },

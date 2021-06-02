@@ -12,7 +12,7 @@
     name: 'app',
     computed: {
       isComponent() {
-        return /^component-/.test('');
+        return /^component-/.test(this.$route.name || '');
       }
     },
     methods: {
