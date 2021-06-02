@@ -181,7 +181,6 @@
 </style>
 
 <script type="text/babel">
-  import compoLang from '../i18n/component.json';
   import Element from 'main/index.js';
   import { stripScript, stripStyle, stripTemplate } from '../util';
   const { version } = Element;

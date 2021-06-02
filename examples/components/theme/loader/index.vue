@@ -13,7 +13,6 @@ import {
   loadUserThemeFromLocal,
   loadPreviewFromLocal
 } from '../localstorage.js';
-import { getActionDisplayName } from '../../theme-configurator/utils/utils';
 
 export default {
   mixins: [Loading, DocStyle],
@@ -93,7 +92,6 @@ export default {
       const previewConfig = loadPreviewFromLocal();
       if (previewConfig.type === 'user') {
         const userConfig = loadUserThemeFromLocal();
-        this.$message(getActionDisplayName('load-local-theme-config'));
         const config = userConfig.filter(theme => (theme.name === previewConfig.name));
         if (config && config[0]) {
           this.userConfig = JSON.parse(config[0].theme);

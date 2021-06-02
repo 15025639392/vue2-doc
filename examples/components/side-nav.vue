@@ -194,8 +194,6 @@
 </template>
 <script>
   import bus from '../bus';
-  import compoLang from '../i18n/component.json';
-
   export default {
     props: {
       data: Array,

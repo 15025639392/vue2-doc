@@ -9,19 +9,16 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = require('./config');
-
-const isProd = process.env.NODE_ENV === 'production';
-
 const webpackConfig = {
   mode: process.env.NODE_ENV,
   entry: {
-    docs: './examples/entry.js'
+    docs: './examples/index.js'
   },
   output: {
-    path: path.resolve(process.cwd(), './examples/element-ui/'),
+    path: path.resolve(process.cwd(), './examples'),
     publicPath: process.env.CI_ENV || '',
     filename: '[name].[hash:7].js',
-    chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js'
+    chunkFilename: '[name].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -29,13 +26,9 @@ const webpackConfig = {
     modules: ['node_modules']
   },
   devServer: {
-    host: '0.0.0.0',
-    port: 8085,
+    port: 8080,
     publicPath: '/',
     hot: true
-  },
-  performance: {
-    hints: false
   },
   stats: {
     children: false
@@ -66,7 +59,7 @@ const webpackConfig = {
       {
         test: /\.(scss|css)$/,
         use: [
-          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+          'style-loader',
           'css-loader',
           'sass-loader'
         ]
@@ -105,14 +98,8 @@ const webpackConfig = {
       filename: './index.html',
       favicon: './examples/favicon.ico'
     }),
-    new CopyWebpackPlugin([
-      { from: 'examples/versions.json' }
-    ]),
     new ProgressBarPlugin(),
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.FAAS_ENV': JSON.stringify(process.env.FAAS_ENV)
-    }),
     new webpack.LoaderOptionsPlugin({
       vue: {
         compilerOptions: {
@@ -126,37 +113,5 @@ const webpackConfig = {
   },
   devtool: '#eval-source-map'
 };
-
-if (isProd) {
-  webpackConfig.externals = {
-    vue: 'Vue',
-    'vue-router': 'VueRouter',
-    'highlight.js': 'hljs'
-  };
-  webpackConfig.plugins.push(
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:7].css'
-    })
-  );
-  webpackConfig.optimization.minimizer.push(
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: false
-    }),
-    new OptimizeCSSAssetsPlugin({})
-  );
-  // https://webpack.js.org/configuration/optimization/#optimizationsplitchunks
-  webpackConfig.optimization.splitChunks = {
-    cacheGroups: {
-      vendor: {
-        test: /\/src\//,
-        name: 'element-ui',
-        chunks: 'all'
-      }
-    }
-  };
-  webpackConfig.devtool = false;
-}
 
 module.exports = webpackConfig;

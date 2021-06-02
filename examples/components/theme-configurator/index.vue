@@ -36,7 +36,7 @@ import actionPanel from './action';
 import {
   filterConfigType,
   filterGlobalValue,
-  getActionDisplayName
+  
 } from './utils/utils.js';
 import Shortcut from './shortcut';
 import {
@@ -87,8 +87,8 @@ export default {
     this.disableShortcut();
   },
   methods: {
-    getActionDisplayName(key) {
-      return getActionDisplayName(key);
+    (key) {
+      return (key);
     },
     showConfigurator() {
       if (this.init) return;

@@ -70,7 +70,7 @@ import {
   ACTION_APPLY_THEME
 } from '../../components/theme/constant.js';
 import throttle from 'throttle-debounce/throttle';
-import { getActionDisplayName } from '../../components/theme-configurator/utils/utils';
+import {  } from '../../components/theme-configurator/utils/utils';
 
 const maxUserTheme = 8;
 
@@ -124,7 +124,7 @@ export default {
       const { type, name } = this.previewConfig;
       if (this.isOfficial) {
         if (this.userTheme.length >= maxUserTheme) {
-          this.$message.error(getActionDisplayName('max-user-theme'));
+          this.$message.error(('max-user-theme'));
           return;
         }
         const autoUserName = this.getNewUserThemeName(name);
@@ -176,8 +176,8 @@ export default {
     const previewConfig = loadPreviewFromLocal();
     const pageRefer = this.$route.params.refer;
     if (!previewConfig || !pageRefer) {
-      this.$alert(getActionDisplayName('no-preview-config'), getActionDisplayName('notice'), {
-        confirmButtonText: getActionDisplayName('confirm'),
+      this.$alert(('no-preview-config'), ('notice'), {
+        confirmButtonText: ('confirm'),
         callback: action => {
           const newPath = this.$route.path.replace('/preview', '');
           this.$router.replace(newPath);

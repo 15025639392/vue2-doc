@@ -1,14 +1,14 @@
 <template>
   <div class="configurator-action">
       <div class="action-group">
-        <el-tooltip :content="getActionDisplayName('undo')">
+        <el-tooltip :content="('undo')">
           <img 
             src="../../assets/images/icon-undo.svg"
             @click="onUndo"
             :class="{ 'active': userConfigHistory.length > 0 }"
           />
         </el-tooltip>
-        <el-tooltip :content="getActionDisplayName('redo')">
+        <el-tooltip :content="('redo')">
           <img 
             src="../../assets/images/icon-redo.svg"
             @click="onRedo"
@@ -24,7 +24,7 @@
             :disabled="isOfficial"
             @click="onReset"
           >
-            {{getActionDisplayName('reset-theme')}}
+            {{('reset-theme')}}
           </el-button>
           <el-button 
             class="download"
@@ -34,7 +34,7 @@
             :disabled="downloadDisabled"
             @click="onDownload"
           >
-            {{getActionDisplayName('download-theme')}}
+            {{('download-theme')}}
           </el-button>
         </div>
       </div>
@@ -111,7 +111,7 @@
 </style>
 
 <script>
-import { getActionDisplayName } from './utils/utils';
+import {  } from './utils/utils';
 export default {
   props: {
     selectOptions: Array,
@@ -135,8 +135,8 @@ export default {
     }
   },
   methods: {
-    getActionDisplayName(key) {
-      return getActionDisplayName(key);
+    (key) {
+      return (key);
     },
     onReset() {
       this.$parent.onReset();

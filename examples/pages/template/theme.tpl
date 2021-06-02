@@ -73,8 +73,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closeCopyForm">{{getActionDisplayName('cancel')}}</el-button>
-        <el-button type="primary" @click="copyToUser">{{getActionDisplayName('confirm')}}</el-button>
+        <el-button @click="closeCopyForm">{{('cancel')}}</el-button>
+        <el-button type="primary" @click="copyToUser">{{('confirm')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -83,7 +83,7 @@
 import ThemeCard from '../../components/theme/theme-card.vue';
 import { themeList, eleThemeList } from '../../components/theme/theme-list.js';
 import { saveUserThemeToLocal, loadUserThemeFromLocal } from '../../components/theme/localstorage';
-import { getActionDisplayName } from '../../components/theme-configurator/utils/utils';
+import {  } from '../../components/theme-configurator/utils/utils';
 
 const maxUserTheme = 8;
 
@@ -130,14 +130,14 @@ export default {
     }
   },
   methods: {
-    getActionDisplayName(key) {
-      return getActionDisplayName(key);
+    (key) {
+      return (key);
     },
     validateCopyName(rule, value, callback) {
       if (!value) {
-        callback(new Error(this.getActionDisplayName('require-them-name')));
+        callback(new Error(this.('require-them-name')));
       } else if (this.filterUserThemeByName(value).length > 0) {
-        callback(new Error(this.getActionDisplayName('duplicate-them-name')));
+        callback(new Error(this.('duplicate-them-name')));
       } else {
         callback();
       }
@@ -163,9 +163,9 @@ export default {
           this.openRenameForm(item.name);
           break;
         case 'delete':
-          this.$confirm(this.getActionDisplayName('confirm-delete-theme'), this.getActionDisplayName('notice'), {
-            confirmButtonText: this.getActionDisplayName('confirm'),
-            cancelButtonText: this.getActionDisplayName('cancel'),
+          this.$confirm(this.('confirm-delete-theme'), this.('notice'), {
+            confirmButtonText: this.('confirm'),
+            cancelButtonText: this.('cancel'),
             type: 'warning'
           }).then(() => {
             this.deleteUserThemeByName(item.name);
@@ -185,7 +185,7 @@ export default {
     },
     openCopyForm(theme) {
       if (this.userTheme.length >= 8) {
-        this.$message.error(this.getActionDisplayName('max-user-theme'));
+        this.$message.error(this.('max-user-theme'));
         return;
       }
       this.copyForm.theme = theme;

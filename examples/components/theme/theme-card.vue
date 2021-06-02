@@ -169,7 +169,7 @@
       <div class="upload" @click="uploadClick">
         <div class="upload-action">
           <img src="../../assets/images/icon-upload.svg"/>
-          <span>{{getActionDisplayName('upload-theme')}}</span>
+          <span>{{('upload-theme')}}</span>
         </div>
       </div>
       <input
@@ -222,20 +222,20 @@
               <el-dropdown @command="actionClick">
                 <i class="el-icon-more"></i>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="rename">{{getActionDisplayName('rename-theme')}}</el-dropdown-item>
-                  <el-dropdown-item command="copy">{{getActionDisplayName('copy-theme')}}</el-dropdown-item>
+                  <el-dropdown-item command="rename">{{('rename-theme')}}</el-dropdown-item>
+                  <el-dropdown-item command="copy">{{('copy-theme')}}</el-dropdown-item>
                   <el-dropdown-item
                       command="delete"
                       style="color: #F56C6C;"
                     >
-                      {{getActionDisplayName('delete-theme')}}
+                      {{('delete-theme')}}
                     </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </span>
           </div>
-          <div class="description" v-if="isOfficial">{{getActionDisplayName(getDescriptionKey(config.name))}} </div>
-          <div class="description" v-else>{{getActionDisplayName('last-modified')}} {{formatDate(config.update)}}</div>
+          <div class="description" v-if="isOfficial">{{(getDescriptionKey(config.name))}} </div>
+          <div class="description" v-else>{{('last-modified')}} {{formatDate(config.update)}}</div>
         </div>
       </div>
     </template>
@@ -251,7 +251,7 @@ import {
 import { savePreviewToLocal } from './localstorage';
 import { tintColor } from '../../color.js';
 import dateUtil from 'element-ui/src/utils/date';
-import { getActionDisplayName } from '../theme-configurator/utils/utils';
+import {  } from '../theme-configurator/utils/utils';
 
 export default {
   props: {
@@ -269,8 +269,8 @@ export default {
     };
   },
   methods: {
-    getActionDisplayName(key) {
-      return getActionDisplayName(key);
+    (key) {
+      return (key);
     },
     getDescriptionKey(name) {
       return name ? `description-${name.toLowerCase()}` : '';
@@ -378,12 +378,12 @@ export default {
         return [
           {
             icon: require('../../assets/images/icon-check.png'),
-            name: getActionDisplayName('theme-check'),
+            name: ('theme-check'),
             action: 'preview'
           },
           {
             icon: require('../../assets/images/icon-copy.png'),
-            name: getActionDisplayName('theme-copy'),
+            name: ('theme-copy'),
             action: 'copy'
           }
         ];
@@ -391,12 +391,12 @@ export default {
       return [
         {
           icon: require('../../assets/images/icon-edit.png'),
-          name: getActionDisplayName('theme-edit'),
+          name: ('theme-edit'),
           action: 'edit'
         },
         {
           icon: require('../../assets/images/icon-download.png'),
-          name: getActionDisplayName('download-theme'),
+          name: ('download-theme'),
           action: 'download'
         }
       ];
