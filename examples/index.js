@@ -2,6 +2,7 @@ import Vue from 'vue';
 import entry from './app';
 import VueRouter from 'vue-router';
 import Element from 'element-ui';
+import Components from 'main/index.js'
 import hljs from 'highlight.js';
 import routes from './route.config';
 import demoBlock from './components/demo-block';
@@ -12,6 +13,7 @@ import './styles/index.scss';
 import './assets/styles/common.css';
 import './assets/styles/fonts/style.css';
 Vue.use(Element);
+Vue.use(Components)
 Vue.use(VueRouter);
 Vue.component('demo-block', demoBlock);
 Vue.component('main-header', MainHeader);

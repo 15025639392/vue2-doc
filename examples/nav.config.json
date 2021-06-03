@@ -29,11 +29,11 @@
         ]
       },
       {
-        "groupName": "其他组件",
+        "groupName": "demo组件",
         "list": [
           {
-            "path": "/dialog",
-            "title": "其他组件"
+            "path": "/helloWord",
+            "title": "helloWord"
           }
         ]
       }
