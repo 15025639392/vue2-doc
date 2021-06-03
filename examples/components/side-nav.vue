@@ -20,6 +20,7 @@
     
     > ul > .nav-item > a {
       margin-top: 15px;
+      
     }
 
     > ul > .nav-item:nth-child(-n + 4) > a {
@@ -29,8 +30,8 @@
     .nav-item {
       
       a {
-        font-size: 14px;
-        color: rgba(0,0,0,.85);
+        font-size: 13px;
+        color: #333;
         line-height: 40px;
         height: 40px;
         margin: 0;
@@ -75,7 +76,6 @@
             display: inline-block;
             vertical-align: middle;
             margin: 8px 12px 12px 0;
-
             img {
               width: 42px;
             }
@@ -106,6 +106,10 @@
       font-size: 14px;
     }
   }
+  .group_title{
+    font-size: 14px!important;
+    color: rgba($color: #000000, $alpha: 0.85)!important;
+  }
 </style>
 <template>
   <div
@@ -116,8 +120,7 @@
         class="nav-item"
         v-for="(item, key) in data"
         :key="key">
-        <a v-if="!item.path && !item.href" @click="expandMenu">{{item.name}}</a>
-        <a v-if="item.href" :href="item.href" target="_blank">{{item.name}}</a>
+        <a class="group_title" v-if="!item.path && !item.href" @click="expandMenu">{{item.name}}</a>
         <router-link
           v-if="item.path"
           active-class="active"
@@ -215,12 +218,12 @@
         }
         this.$nextTick(() => {
           this.hideAllMenu();
-          // let activeAnchor = this.$el.querySelector('a.active');
-          // let ul = activeAnchor.parentNode;
-          // while (ul.tagName !== 'UL') {
-          //   ul = ul.parentNode;
-          // }
-          // ul.style.height = 'auto';
+          let activeAnchor = this.$el.querySelector('a.active');
+          let ul = activeAnchor.parentNode;
+          while (ul.tagName !== 'UL') {
+            ul = ul.parentNode;
+          }
+          ul.style.height = 'auto';
         });
       },
       hideAllMenu() {

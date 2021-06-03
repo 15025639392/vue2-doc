@@ -20,11 +20,20 @@
     "name": "组件总览",
     "groups": [
       {
-        "groupName": "Basic",
+        "groupName": "基础组件",
         "list": [
           {
             "path": "/dialog",
             "title": "弹窗"
+          }
+        ]
+      },
+      {
+        "groupName": "其他组件",
+        "list": [
+          {
+            "path": "/dialog",
+            "title": "其他组件"
           }
         ]
       }
