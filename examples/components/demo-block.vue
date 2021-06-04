@@ -65,7 +65,7 @@
     }
 
     .meta {
-      background-color: #fafafa;
+      background-color: #fff;
       border-top: solid 1px #eaeefb;
       overflow: hidden;
       height: 0;
