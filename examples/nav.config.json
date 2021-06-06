@@ -25,15 +25,14 @@
           {
             "path": "/dialog",
             "title": "弹窗"
-          }
-        ]
-      },
-      {
-        "groupName": "demo组件",
-        "list": [
+          },
           {
             "path": "/helloWord",
             "title": "helloWord"
+          },
+          {
+            "path": "/proForm",
+            "title": "联动表单"
           }
         ]
       }

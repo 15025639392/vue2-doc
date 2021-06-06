@@ -22,7 +22,6 @@ const router = new VueRouter({
   mode: 'hash',
   routes
 });
-
 router.afterEach(route => {
   // https://github.com/highlightjs/highlight.js/issues/909#issuecomment-131686186
   Vue.nextTick(() => {
