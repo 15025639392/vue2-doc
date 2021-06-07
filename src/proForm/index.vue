@@ -1,11 +1,11 @@
 <script>
 import {wraper} from './render'
-import Vue from 'vue';
+const randomKey = Math.random().toString(32).slice(2);
 export default {
     name:'pro-form',
     data(){
         return {
-            from:{}
+            [randomKey]:false
         }
     },
     props: {
@@ -15,7 +15,6 @@ export default {
                 return []
             }
         },
-        fromData:Object,
         labelWidth: Number,
         rules:{
             type:Object,
@@ -24,24 +23,23 @@ export default {
             }
         }
     },
-    watch:{
-        fromData(){
-            this.initForm()
-        }
-    },
     created(){
-        this.initForm()
+        this.validateForm()
+    },
+    mounted(){
+        this.$nextTick(()=>{
+            this[randomKey]=true
+        })
     },
     methods:{
-        initForm(){
+        validateForm(){
             const fileds={}
             this.config.forEach(o=>{
                 // 这里验证每一个子项构造
                 if(fileds.hasOwnProperty(o.field)){
                     throw(`配置中含有相同的字段：field:${o.field}`)
                 }
-                fileds[o.field] = this.fromData?this.fromData[o.field]:null
-                Vue.set(this.from,o.field,fileds[o.field])
+                fileds[o.field] = null
             })
         },
         validate() {
@@ -54,6 +52,26 @@ export default {
                     }
                 });
             })
+        },
+
+        setState(obj,fn){
+            console.log('触发了，，，，，', obj)
+            if(!this[randomKey]){
+                return
+            }
+            if(!obj){
+                throw('请传入正确的结构，正确的表达式为：this.setSatte({name:xxx})')
+                return
+            }
+            for(const key in obj){
+                const value = obj[key]
+                this.$emit(`update:${key}`,value)
+            }
+            if(fn){
+                this.$nextTick(()=>{
+                    fn()
+                })
+            }
         }
     },
     render(h){
@@ -62,8 +80,7 @@ export default {
             <div>
                 <el-form 
                     ref="form" 
-                    model={this.from}
-                    vBind={this.$attrs}
+                    model={this.$attrs}
                     labelWidth={this.labelWidth?this.labelWidth+'px':"80px" }
                     rules={this.rules}
                 >
@@ -77,7 +94,6 @@ export default {
                 {
                     container&&
                     container({
-                        formData:this.from,
                         validate:()=>{
                             return this.validate()
                         }
@@ -86,7 +102,6 @@ export default {
                 {
                     footer&&
                     footer({
-                        formData:this.from,
                         validate:()=>{
                             return this.validate()
                         }

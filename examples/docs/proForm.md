@@ -16,15 +16,15 @@ Pro-Form
 :::demo 这是组件的基本用法
 
 ```html
+<el-button type="text" @click="onChangeFrom">测试改变From的值</el-button>
 <el-button type="text" @click="dialogFormVisible = true">打开表单的 Dialog</el-button>
 <el-dialog title="表单" :visible.sync="dialogFormVisible">
 <pro-form
-    ref="proFrom"
     :config="fromConfig"
     :label-width="120"
     label-position="left"
-    :fromData="null"
-    @onFormDataChange = "onFormDataChange"
+    v-bind.sync="fromData"
+    :rules="rules"
 >
     <template v-slot:slottest="{validate}">
         自定义插槽位置测试
@@ -57,6 +57,11 @@ Pro-Form
                 test9:'',
                 test10:''
           },
+          rules:{
+              name:[{
+                  required: true
+              }]
+          },
         fromConfig: [
             {
                 field:'name',
@@ -64,7 +69,7 @@ Pro-Form
                 type:types.isInput,
                 maxlength:10,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -72,8 +77,8 @@ Pro-Form
                 label:'本地选择',
                 type:types.isSelect,
                 slotName:'slottest',//测试任意地方插入插槽
-                disabled:(from)=>{
-                    return from.name ==='ldy'
+                disabled:()=>{
+                    return this.name ==='ldy'
                 },
                 data:[
                     {
@@ -96,18 +101,18 @@ Pro-Form
                     }
                 },
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
                 field:'test2',
                 label:'test',
                 type:types.isNumber,
-                hide:(from)=>{
-                    return from.name ==='ldy'
+                hide:()=>{
+                    return this.name ==='ldy'
                 },
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -115,7 +120,7 @@ Pro-Form
                 label:'test',
                 type:types.isSwitch,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -123,7 +128,7 @@ Pro-Form
                 label:'test',
                 type:types.isSlider,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -131,7 +136,7 @@ Pro-Form
                 label:'test',
                 type:types.isTimePicker,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
 
@@ -140,7 +145,7 @@ Pro-Form
                 label:'test',
                 type:types.isDatePicker,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -151,7 +156,7 @@ Pro-Form
                     type:'daterange'
                 },
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -162,7 +167,7 @@ Pro-Form
                     type:'datetime'
                 },
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -170,7 +175,7 @@ Pro-Form
                 label:'test7',
                 type:types.isRage,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -178,7 +183,7 @@ Pro-Form
                 label:'test8',
                 type:types.isColorPicker,
                 onChange(config){
-                    console.log(config)
+                    
                 }
             },
             {
@@ -186,7 +191,7 @@ Pro-Form
                 label:'test8',
                 type:'div',
                 onChange(config){
-                    console.log(config)
+                    
                 },
                 render(h,item){
                     console.log(item)
@@ -201,7 +206,7 @@ Pro-Form
                     action:'https://jsonplaceholder.typicode.com/posts/'
                 },
                 onChange(config){
-                    console.log(config)
+                    
                 },
                 class:{
                     'upload':true
@@ -220,15 +225,14 @@ Pro-Form
         this.fromData.name='11111'
     },
     methods:{
+        onChangeFrom(){
+            this.fromData.name='what,Fuck'
+        },
         onSubmit(validate){
-            this.test='xxxxxxxxx'
             validate().then(res=>{
                 console.log(this.fromData)
                 console.log(res)
             })
-        },
-        onFormDataChange(o){
-            console.log(o)
         }
     }
   };

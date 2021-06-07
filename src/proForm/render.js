@@ -2,9 +2,10 @@ import {types} from './types'
 import {isArray,hasOwnProperty} from './utils'
 // 渲染每一个子项目
 export function renderItem(h,item){
-    const {field,value,...rest} = item
+    const {field,value,...rest} = item;
+    const bind = this.$attrs;
      // 隐藏联动条件成立
-     if(item.hide&&item.hide.call(this,this.from)){
+     if(item.hide&&item.hide.call(this)){
         return null
     }
     return (
@@ -15,23 +16,23 @@ export function renderItem(h,item){
                     {
                         ...rest,
                         props:{
-                            value: this.from[item.field]
+                            value: bind[item.field]
                         },
                         ...buildAttrs.bind(this)(item),
                         on:{
                             input:(v)=>{
-                                this.from[item.field]=v
-                                console.log(this.from)
-                                this.$emit('onFormDataChange',{
-                                    key:item.field,
-                                    value:v,
-                                    fromData:this.from
+                                const newData = {
+                                    [item.field]:v
+                                }
+                                this.$emit('onChange',newData)
+                                this.setState(newData,()=>{
+
                                 })
-                                item.onChange.bind(this)(this.from)
+                                item.onChange.call(this)
                             }
                         }
                     },
-                    renderChilren.bind(this)(h,item)
+                    renderChilren.call(this,h,item)
                 )
             }
         </el-form-item>
@@ -46,7 +47,7 @@ function buildAttrs(config){
         maxlength,
         'show-word-limit': showWord,
         ...config.attrs,
-        disabled:config.disabled&&config.disabled(this.from)===true,
+        disabled:config.disabled&&config.disabled()===true,
     }
     if(hasOwnProperty(config.attrs,'remoteMethod')){
         const {remoteMethod} = config.attrs
@@ -66,7 +67,7 @@ function buildAttrs(config){
 
 function renderChilren(h,item){
     if(item.render){
-        return [item.render.call(this,h,this.from,item)]
+        return [item.render.call(this,h,item)]
     }
     if(item.type===types.isSelect){
         if(isArray(item.data)){
@@ -100,7 +101,6 @@ export function wraper(h,item){
             {
                 scopeSlot&&
                 scopeSlot({
-                    formData:this.from,
                     validate:()=>{
                         return this.validate()
                     }
