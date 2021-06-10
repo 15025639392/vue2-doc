@@ -1,4 +1,4 @@
-<script>
+<script lang="jsx">
 import {wraper} from './render'
 const randomKey = Math.random().toString(32).slice(2);
 export default {

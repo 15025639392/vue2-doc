@@ -9,8 +9,8 @@ import demoBlock from './components/demo-block';
 import MainHeader from './components/header';
 import SideNav from './components/side-nav';
 import 'element-ui/packages/theme-chalk/src/index.scss';
-import './styles/index.scss';
 import './assets/styles/common.css';
+import './styles/index.scss';
 import './assets/styles/fonts/style.css';
 Vue.use(Element);
 Vue.use(Components)

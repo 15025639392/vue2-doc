@@ -16,26 +16,26 @@ Pro-Form
 :::demo 这是组件的基本用法
 
 ```html
-<el-button type="text" @click="onChangeFrom">测试改变From的值</el-button>
 <el-button type="text" @click="dialogFormVisible = true">打开表单的 Dialog</el-button>
 <el-dialog title="表单" :visible.sync="dialogFormVisible">
-<pro-form
-    :config="fromConfig"
-    :label-width="120"
-    label-position="left"
-    v-bind.sync="fromData"
-    :rules="rules"
->
-    <template v-slot:slottest="{validate}">
-        自定义插槽位置测试
-    </template>
-    <template v-slot:footer="{validate}">
-        <div class="dialog-footer" style="text-align:right">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="onSubmit(validate)">确定</el-button>
-        </div>
-    </template>
-</pro-form>
+    <pro-form
+        :config="fromConfig"
+        :label-width="120"
+        label-position="left"
+        v-bind.sync="fromData"
+        :rules="rules"
+        @onChange="onChangeFrom"
+    >
+        <template v-slot:slottest="{validate}">
+            自定义插槽位置测试
+        </template>
+        <template v-slot:footer="{validate}">
+            <div class="dialog-footer" style="text-align:right">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="onSubmit(validate)">确定</el-button>
+            </div>
+        </template>
+    </pro-form>
 </el-dialog>
 <script>
   export default {
@@ -225,8 +225,9 @@ Pro-Form
         this.fromData.name='11111'
     },
     methods:{
-        onChangeFrom(){
-            this.fromData.name='what,Fuck'
+        onChangeFrom(obj){
+            console.log(obj)
+            this.fromData.name = obj.name
         },
         onSubmit(validate){
             validate().then(res=>{

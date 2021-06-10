@@ -1,9 +1,11 @@
 import HelloWord from './demo';
 import ProForm from './proForm';
+import ProTable from './proTable';
 import {types} from './proForm/types'
 const components = [
     HelloWord,
-    ProForm
+    ProForm,
+    ProTable
 ]
 const install = function(Vue, opts = {}) {
     components.forEach(component => {
@@ -15,5 +17,6 @@ const install = function(Vue, opts = {}) {
 export default {
     install,
     HelloWord,
-    ProForm
+    ProForm,
+    ProTable
 }

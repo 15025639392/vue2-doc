@@ -33,6 +33,14 @@
           {
             "path": "/proForm",
             "title": "联动表单"
+          },
+          {
+            "path": "/simpleState",
+            "title": "简单的状态管理"
+          },
+          {
+            "path": "/proTable",
+            "title": "表格"
           }
         ]
       }
