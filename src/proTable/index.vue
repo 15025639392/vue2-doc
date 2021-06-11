@@ -1,11 +1,13 @@
 <script>
-import {renderScopeSlot} from './render'
-import {store} from './share'
+import {renderScopeSlot, renderActions} from './render'
+import {store as share} from './share'
+import {calcAction} from './utils'
 export default {
     name:'pro-table',
     data(){
         return {
-            remoteStore:store.state
+            randomKey:Math.random().toString(32).slice(2),
+            store:share.state
         }
     },
     props: {
@@ -21,6 +23,12 @@ export default {
                 return []
             }
         },
+        actions:{
+            type:Array||Function||undefined||null||false,
+            default(){
+                return undefined
+            }
+        },
         pagination:{
             type:Object,
             default(){
@@ -33,8 +41,12 @@ export default {
     },
     methods:{
     },
-    render(h){
-        console.log(this.$scopedSlots)
+    render(){
+        let action= null
+        if(this.actions&&this.dataSource&&this.dataSource.length){
+            action = calcAction(this.dataSource,this.actions)
+        }
+        // 在渲染之前,先将传过来的配置进行分割
         return (
             <el-table
                 data={this.dataSource||[]}
@@ -48,8 +60,7 @@ export default {
                             title,
                             width,
                             filters,
-                            filterMethod,
-                            ...rest
+                            filterMethod
                         } = r;
                         return (
                             <el-table-column
@@ -61,13 +72,16 @@ export default {
                                 filterMethod={filterMethod}
                                 scopedSlots={{
                                     default: props => {
-                                        return renderScopeSlot(h,r,props,this.remoteStore)
+                                        return renderScopeSlot.call(this,r,props,this.store,this.randomKey)
                                     }
                                 }}
                             >
                             </el-table-column>
                         )
                     })
+                }
+                {
+                    renderActions(this.actions,this.store,action)
                 }
             </el-table>
         )

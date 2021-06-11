@@ -1,32 +1,13 @@
 {
   "presets": [
     "@babel/preset-env",
-    // "@vue/cli-plugin-babel/preset",
     ["@vue/babel-preset-jsx",{
       "injectH": false
-    }],
-    // ["@vue/app", {
-    //   "useBuiltIns": "entry",
-    //   "jsx": {
-    //     "injectH": false
-    //   }
-    // }]
-    // [
-    //   "env",
-    //   {
-    //     "loose": true,
-    //     "modules": false,
-    //     "targets": {
-    //       "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-    //     }
-    //   }
-    // ]
+    }]
   ],
   "plugins": [
     "babel-plugin-transform-vue-jsx",
-    // "@babel/helper-module-imports",
     "@babel/plugin-proposal-optional-chaining"
-    // "@babel/helper-module-imports"
   ],
   "env": {
     "utils": {
