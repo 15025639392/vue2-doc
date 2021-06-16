@@ -1,7 +1,8 @@
 <script>
-import {renderScopeSlot, renderActions} from './render'
+import {renderScopeSlot, renderActions, renderExpand} from './render'
 import {store as share} from './share'
-import {calcAction} from './utils'
+import {calcAction,middlelineToCamelCase} from './utils'
+import s from './style.module.scss'
 export default {
     name:'pro-table',
     data(){
@@ -41,53 +42,56 @@ export default {
     },
     methods:{
     },
-    render(){
+    render(h){
         let action= null
         if(this.actions&&this.dataSource&&this.dataSource.length){
             action = calcAction(this.dataSource,this.actions)
         }
+        
         // 在渲染之前,先将传过来的配置进行分割
+        const camelCaseAttrs = middlelineToCamelCase(this.$attrs)
+        console.log(camelCaseAttrs)
         return (
-            <el-table
-                data={this.dataSource||[]}
-                border
-            >
-                {
-                    this.columns.map((r,i)=>{
-                        const {
-                            key,
-                            dataIndex,
-                            title,
+            h('el-table',{
+                ...this.$attrs,
+                attrs:{
+                    lazy:true,
+                    data:this.dataSource||[],
+                    border: true,
+                    ...this.$attrs,
+                }
+            },[
+                ...renderExpand(this.$scopedSlots),
+                this.columns.map((r,i)=>{
+                    const {
+                        key,
+                        dataIndex,
+                        title,
+                        width,
+                        filters,
+                        filterMethod
+                    } = r;
+                    return h('el-table-column',{
+                        attrs:{
+                            key:key||i,
+                            prop:dataIndex,
+                            label:title,
+                            align:'center',
+                            className:r.isImg?s.imgrow:'',
                             width,
                             filters,
-                            filterMethod
-                        } = r;
-                        return (
-                            <el-table-column
-                                key={key||i}
-                                prop={dataIndex}
-                                label={title}
-                                width={width}
-                                filters={filters}
-                                filterMethod={filterMethod}
-                                scopedSlots={{
-                                    default: props => {
-                                        return renderScopeSlot.call(this,r,props,this.store,this.randomKey)
-                                    }
-                                }}
-                            >
-                            </el-table-column>
-                        )
+                            filterMethod,
+                        },
+                        scopedSlots:{
+                            default: props => {
+                                return renderScopeSlot.call(this,r,props,this.store,this.randomKey)
+                            }
+                        }
                     })
-                }
-                {
-                    renderActions(this.actions,this.store,action)
-                }
-            </el-table>
+                }),
+                renderActions(this.actions,this.store,action)
+            ])
         )
     }
 }
 </script>
-<style scoped>
-
-</style>

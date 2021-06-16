@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import {isArray,isObject,isFn,isNormalAction,getCurrentIcon,hasOwnProperty} from './utils';
 import {store} from './share'
+import s from './style.module.scss'
 const h = new Vue().$createElement
 export function renderScopeSlot(cloumn,scope,remoteStore,randomKey){
     if(cloumn.getData){
@@ -25,6 +26,9 @@ export function renderScopeSlot(cloumn,scope,remoteStore,randomKey){
     }
     if(cloumn.component){
         cloumn.component
+    }
+    if(cloumn.isImg){
+        return renderImgUrls(row,cloumn)
     }
     return cell
 }
@@ -69,4 +73,42 @@ export function renderActions(actions,store,action,parent){
         )
     }
 }
+function renderImgUrls(row,cloumn){
+    const imgUrls = row[cloumn.dataIndex]
+    if(!imgUrls){
+        return null
+    }
+    if(!isArray(imgUrls)){
+        imgUrls = imgUrls.split(',')
+    }
+    
+    return (
+        <el-badge value={imgUrls.length} class="img_item item">
+                <el-image
+                    src={imgUrls[0]}
+                    preview-src-list={imgUrls}
+                />
+                {/* <div class="preview">
+                    <i class="el-icon-view"/>
+                </div> */}
+        </el-badge>
+    )
 
+}
+
+export function renderExpand(slots){
+    const {expand} = slots||{}
+    if(expand){
+        return [
+            h('el-table-column',{
+                attrs:{
+                    type:'expand'
+                },
+                scopedSlots:{
+                    default:props=>expand(props)
+                }
+            })
+        ]
+    }
+    return []
+}

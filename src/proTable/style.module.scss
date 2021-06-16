@@ -1,0 +1,41 @@
+.imgrow{
+    // padding: 0!important;
+    // margin: 0!important;
+    &:not([class*="is-leaf"]){
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        :global{
+            .cell{
+                width: 50px;
+                height: 30px;
+                position: relative;
+                overflow: visible!important;
+                line-height:normal!important;
+                padding-left: 0!important;
+                padding-right:0!important;
+                cursor: pointer;
+                .preview{
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .el-icon-view{
+                        visibility: hidden;
+                    }
+                    &:hover{
+                        background-color: rgba(0,0,0,.5);
+                        .el-icon-view{
+                            visibility: visible;
+                            color:#fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -53,7 +53,25 @@ const webpackConfig = {
         }
       },
       {
+        test: /\.module\.scss$/,
+        exclude:/node_modules/,
+        use: [
+          'vue-style-loader',
+          {
+            loader:'css-loader',
+            options: {
+              // 开启 CSS Modules
+              modules: true,
+              // 自定义生成的类名
+              localIdentName: '[local]_[hash:base64:4]'
+            }
+          },
+          'sass-loader'
+        ]
+      },
+      {
         test: /\.(scss|css)$/,
+        exclude:/\.module\.scss$/,
         use: [
           'style-loader',
           'css-loader',
