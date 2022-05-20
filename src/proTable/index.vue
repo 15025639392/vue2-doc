@@ -47,18 +47,16 @@ export default {
         if(this.actions&&this.dataSource&&this.dataSource.length){
             action = calcAction(this.dataSource,this.actions)
         }
-        
         // 在渲染之前,先将传过来的配置进行分割
         const camelCaseAttrs = middlelineToCamelCase(this.$attrs)
-        console.log(camelCaseAttrs)
         return (
             h('el-table',{
                 ...this.$attrs,
                 attrs:{
                     lazy:true,
-                    data:this.dataSource||[],
                     border: true,
                     ...this.$attrs,
+                    data:this.dataSource||[],
                 }
             },[
                 ...renderExpand(this.$scopedSlots),
@@ -69,10 +67,12 @@ export default {
                         title,
                         width,
                         filters,
-                        filterMethod
+                        filterMethod,
+                        fixed
                     } = r;
                     return h('el-table-column',{
                         attrs:{
+                            fixed,
                             key:key||i,
                             prop:dataIndex,
                             label:title,
@@ -89,7 +89,7 @@ export default {
                         }
                     })
                 }),
-                renderActions(this.actions,this.store,action)
+                action&&renderActions(this.actions,this.store,action)
             ])
         )
     }

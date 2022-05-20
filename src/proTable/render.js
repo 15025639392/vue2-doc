@@ -53,6 +53,7 @@ export function renderActions(actions,store,action,parent){
                     prop="actions"
                     label="操作"
                     width={action.width}
+                    fixed="right"
                     scopedSlots={{
                         default: (props,index) => {
                             return <div>
@@ -81,6 +82,15 @@ function renderImgUrls(row,cloumn){
     if(!isArray(imgUrls)){
         imgUrls = imgUrls.split(',')
     }
+
+    if(imgUrls.length<2){
+        return ( 
+            <el-image
+                src={imgUrls[0]}
+                preview-src-list={imgUrls}
+            />
+        )
+    }
     
     return (
         <el-badge value={imgUrls.length} class="img_item item">
@@ -88,9 +98,6 @@ function renderImgUrls(row,cloumn){
                     src={imgUrls[0]}
                     preview-src-list={imgUrls}
                 />
-                {/* <div class="preview">
-                    <i class="el-icon-view"/>
-                </div> */}
         </el-badge>
     )
 
